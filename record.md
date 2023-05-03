@@ -45,3 +45,9 @@
 
 - nodemon 설치 {`npm install nodemon --save-dev`}
 - backend 명령어 추가 {`npm run backend`}
+
+# 7. 비밀정보 보호화
+
+> mongoDB 연결할 때 필요한 id, password 정보를 .gitignore파일에 추가해서 보호화하기
+
+- config > dev.js, prod.js, key.js 생성 후 환경변수 설정

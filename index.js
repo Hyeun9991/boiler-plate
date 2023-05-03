@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const { User } = require("./models/User");
+const config = require("./config/key");
 
 // client에서 오는 정보를 server가 분석할 수 있게 설정
 app.use(express.json());
@@ -10,9 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://eh123:123eh@node-b.8fnjs3a.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(config.mongoURI)
   .then(() => {
     console.log("MongoDB Connected...");
   })
