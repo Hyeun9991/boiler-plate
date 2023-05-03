@@ -18,7 +18,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => res.send("Hello World! 안녕하세요  "));
+app.get("/", (req, res) => res.send("apple!"));
 
 // 회원가입
 app.post("/register", async (req, res) => {

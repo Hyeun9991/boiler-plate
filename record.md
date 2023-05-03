@@ -4,7 +4,7 @@
 - index.js 생성
 - express 설치 {`npm install express --save`}
 - express js 앱 만들기
-- start 명령어 만들기 {명령어: `npm run start`}
+- start 명령어 추가 {`npm run start`}
 
 # 2. mongoDB 연결
 
@@ -36,3 +36,12 @@
 - client에서 오는 정보를 server가 분석할 수 있게 설정
 - client에서 받은 데이터를 비동기 post 방식으로 데이터베이스에 저장
 - server 켜고 postman에서 테스트 - {`success: true`}
+
+# 6. nodemon
+
+> nodemon: 소스의 변화를 감지해서 변화된 부분을 반영해주는 것
+> --save-dev: development mode, local에서만 사용하겠다는 의미
+> 서버를 끄지 않고 새로고침만 해도 새로운 내용이 반영됨
+
+- nodemon 설치 {`npm install nodemon --save-dev`}
+- backend 명령어 추가 {`npm run backend`}
