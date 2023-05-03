@@ -51,3 +51,10 @@
 > mongoDB 연결할 때 필요한 id, password 정보를 .gitignore파일에 추가해서 보호화하기
 
 - config > dev.js, prod.js, key.js 생성 후 환경변수 설정
+
+# 8. Bcrypt로 비밀번호 암호화 - pre()
+
+> pre(): save하기 전에 호출되는 코드, next를 실행하지 않으면 save가 되지 않기 때문에 타큐먼트 저장 전 최종 검증으로 쓸 수 있다.
+
+- bcrypt 설치 {`npm install bcrypt --save`}
+- User Model에 저장하기 전에 비밀번호 필드만 bcrypt로 암호화해서 저장
