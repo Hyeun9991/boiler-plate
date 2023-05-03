@@ -51,8 +51,21 @@ userSchema.pre("save", function (next) {
         next();
       });
     });
+  } else {
+    next();
   }
 });
+
+// 비밀번호 확힌하는 메소드
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+  // plainPassword 1234567 / 암호화된 비밀번호 $2b$10$V8TnFUrFMJEUSfGM3NJzzuYe6
+  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+    if (err) return cb(err);
+
+    // 비밀번호가 일치
+    cb(null, isMatch); // error는 없고, 비밀번호가 같음
+  });
+};
 
 // model로 schema 감싸기
 const User = mongoose.model("User", userSchema);

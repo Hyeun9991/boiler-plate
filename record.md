@@ -58,3 +58,8 @@
 
 - bcrypt 설치 {`npm install bcrypt --save`}
 - User Model에 저장하기 전에 비밀번호 필드만 bcrypt로 암호화해서 저장
+
+# 9. 로그인 기능 구현 - Bcrypt, comparePassword method
+
+- login router 생성
+- comparePassword 메소드 작성

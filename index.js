@@ -19,18 +19,8 @@ mongoose
 
 app.get("/", (req, res) => res.send("apple!"));
 
-// 회원가입
+// 회원가입 - client에서 전달받은 data를 DB에 저장
 app.post("/register", async (req, res) => {
-  /**
-   * client에서 전달받은 data를 DB에 저장
-   *
-   * {
-   *    id: "eh",
-   *    password: "2u319"
-   * }
-   * req.body에는 이런식으로 데이터가 들어있음.
-   */
-
   const user = new User(req.body); // 인스턴스 생성
 
   // User Model에 저장
@@ -48,6 +38,33 @@ app.post("/register", async (req, res) => {
         err: err,
       });
     });
+});
+
+// 로그인
+app.post("/login", (req, res) => {
+  // 1. 요청된 이메일이 DB에 있는지 확인
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({
+        loginSuccess: false,
+        message: "제공된 이메일에 해당하는 유저가 없습니다.",
+      });
+    }
+
+    // 2. 요청된 이메일이 DB에 있다면 비밀번호가 맞는 비밀번호인지 확인
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch)
+        return res.json({
+          loginSuccess: false,
+          message: "비밀번호가 틀렸습니다.",
+        });
+
+      // 3. 비밀번호가 맞다면 토큰을 생성
+      user.generateToken((err, user) => {
+        
+      })
+    });
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
