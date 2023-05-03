@@ -1,0 +1,5 @@
+- npm init
+- index.js 생성
+- npm install express --save
+- express js 앱 만들기
+- start 명령어 만들기 `npm run start`
