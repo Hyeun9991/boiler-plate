@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10; // saltRounds: salt가 몇 글자인지 정의
+const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -56,15 +57,25 @@ userSchema.pre("save", function (next) {
   }
 });
 
-// 비밀번호 확힌하는 메소드
-userSchema.methods.comparePassword = function (plainPassword, cb) {
-  // plainPassword 1234567 / 암호화된 비밀번호 $2b$10$V8TnFUrFMJEUSfGM3NJzzuYe6
-  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-    if (err) return cb(err);
-
-    // 비밀번호가 일치
-    cb(null, isMatch); // error는 없고, 비밀번호가 같음
+// 비밀번호 확힌 메소드
+userSchema.methods.comparePassword = function (plainPassword) {
+  const user = this;
+  return bcrypt.compare(plainPassword, user.password).catch((err) => {
+    throw new Error(err);
   });
+};
+
+// 토큰 생성 메소드
+userSchema.methods.generateToken = async function () {
+  try {
+    const user = this;
+    const token = jwt.sign(user._id.toHexString(), "secretToken"); // user id와 'secretToken'을 합쳐서 토큰 생성
+    user.token = token; // user token field에 생성한 token 넣기
+    await user.save(); // 저장 후 반환된 user를 사용하기 위해 await 키워드 사용
+    return user; // 반환값으로 user 정보 전달
+  } catch (err) {
+    throw new Error(err); // 예외 발생
+  }
 };
 
 // model로 schema 감싸기
