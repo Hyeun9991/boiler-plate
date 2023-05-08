@@ -6,4 +6,4 @@
 - client 폴더 생성
 - CRA 프로젝트 시작 {`npx create-react-app .`}
 
-# 2.
+# 2. 
