@@ -5,5 +5,8 @@
 
 - client 폴더 생성
 - CRA 프로젝트 시작 {`npx create-react-app .`}
+- 불필요한 파일 삭제
+- 폴더, 파일 추가
 
-# 2. 
+# 2. React Router Dom
+
