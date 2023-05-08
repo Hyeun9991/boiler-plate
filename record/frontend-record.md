@@ -10,3 +10,9 @@
 
 # 2. React Router Dom
 
+- React Router Dom 설치 {`npm install react-router-dom`}
+- App.js 파일에 component route 설정 (landing, login, register page)
+
+# 3. Axios
+ 
+- axios 설치 {`npm install axios --save`}

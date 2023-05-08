@@ -25,6 +25,8 @@ mongoose
 
 app.get("/", (req, res) => res.send("apple!"));
 
+app.get("/api/hello", (req, res) => res.send("안녕하세요~"));
+
 // 회원가입
 app.post("/api/users/register", async (req, res) => {
   const user = new User(req.body); // 인스턴스 생성
