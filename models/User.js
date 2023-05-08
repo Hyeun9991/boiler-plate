@@ -58,23 +58,44 @@ userSchema.pre("save", function (next) {
 });
 
 // 비밀번호 확힌 메소드
-userSchema.methods.comparePassword = function (plainPassword) {
-  const user = this;
-  return bcrypt.compare(plainPassword, user.password).catch((err) => {
+userSchema.methods.comparePassword = async function (plainPassword) {
+  const user = this; // this = userSchema
+  try {
+    return await bcrypt.compare(plainPassword, user.password);
+  } catch (err) {
     throw new Error(err);
-  });
+  }
 };
 
 // 토큰 생성 메소드
 userSchema.methods.generateToken = async function () {
   try {
-    const user = this;
+    const user = this; // this = userSchema
     const token = jwt.sign(user._id.toHexString(), "secretToken"); // user id와 'secretToken'을 합쳐서 토큰 생성
     user.token = token; // user token field에 생성한 token 넣기
     await user.save(); // 저장 후 반환된 user를 사용하기 위해 await 키워드 사용
     return user; // 반환값으로 user 정보 전달
   } catch (err) {
     throw new Error(err); // 예외 발생
+  }
+};
+
+// 토큰 복호화
+userSchema.static.findByToken = async function (token) {
+  // static으로 한 이유: findOne은 mongoose 모델에서 작동하는 함수이기 때문
+
+  const user = this; // this = mongoose
+
+  try {
+    // token을 decode 한다.
+    const decoded = jwt.verify(token, "secretToken");
+
+    // _id를 이용해서 user 찾은다음에 token이 일치하는지 확인
+    const foundUser = await user.findOne({ _id: decoded, token: token });
+
+    return foundUser;
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
