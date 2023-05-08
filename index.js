@@ -81,18 +81,41 @@ app.post("/api/users/login", async (req, res) => {
 });
 
 // Auth
-app.get("/api/users/auth", auth, async (req, res) => {
-  // auth 미들웨어를 통과했다면 client에 데이터 전달
-  res.status(200).json({
-    _id: req.user._id,
-    isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true,
-    email: req.user.email,
-    name: req.user.name,
-    lastname: req.uesr.lastname,
-    role: req.user.role,
-    image: req.user.image,
-  });
+app.get("/api/users/auth", auth, async (req, res, next) => {
+  try {
+    // auth 미들웨어를 통과했다면 client에 데이터 전달
+    res.status(200).json({
+      _id: req.user._id,
+      isAdmin: req.user.role === 0 ? false : true,
+      isAuth: true,
+      email: req.user.email,
+      name: req.user.name,
+      lastname: req.user.lastname,
+      role: req.user.role,
+      image: req.user.image,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 로그아웃
+app.get("/api/users/logout", auth, async (req, res) => {
+  try {
+    // auth middleware에서 가져와서 찾음
+    const user = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { token: "" }
+    );
+
+    if (!user) {
+      return res.json({ success: false, message: "Failed to logout" });
+    }
+
+    return res.status(200).send({ success: true });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // port 연결 확인

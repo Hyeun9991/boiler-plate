@@ -35,7 +35,8 @@ const userSchema = mongoose.Schema({
   },
 });
 
-// save() 하기 전에 이 코드 실행
+// User 모델의 password 필드가 변경될 때만 해당 비밀번호를 암호화해서 저장하는 코드
+// save() 메소드가 실행되기 전에 pre-hook 함수를 실행
 userSchema.pre("save", function (next) {
   var user = this;
 
@@ -69,33 +70,29 @@ userSchema.methods.comparePassword = async function (plainPassword) {
 
 // 토큰 생성 메소드
 userSchema.methods.generateToken = async function () {
-  try {
-    const user = this; // this = userSchema
-    const token = jwt.sign(user._id.toHexString(), "secretToken"); // user id와 'secretToken'을 합쳐서 토큰 생성
-    user.token = token; // user token field에 생성한 token 넣기
-    await user.save(); // 저장 후 반환된 user를 사용하기 위해 await 키워드 사용
-    return user; // 반환값으로 user 정보 전달
-  } catch (err) {
-    throw new Error(err); // 예외 발생
-  }
+  const user = this;
+
+  const token = jwt.sign(user._id.toHexString(), "secretToken");
+
+  user.token = token;
+  await user.save();
+
+  return token;
 };
 
-// 토큰 복호화
-userSchema.static.findByToken = async function (token) {
-  // static으로 한 이유: findOne은 mongoose 모델에서 작동하는 함수이기 때문
+// 토큰 복호화 메소드
+userSchema.statics.findByToken = async function (token) {
+  const user = this;
 
-  const user = this; // this = mongoose
+  // 유저 아이디를 이용해서 유저를 찾은 다음에
+  // 클라이언트에서 가져온 token과 DB에 보관된 토큰이 일치하는지 확인
 
   try {
-    // token을 decode 한다.
     const decoded = jwt.verify(token, "secretToken");
-
-    // _id를 이용해서 user 찾은다음에 token이 일치하는지 확인
     const foundUser = await user.findOne({ _id: decoded, token: token });
-
     return foundUser;
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 };
 
