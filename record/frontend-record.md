@@ -14,5 +14,12 @@
 - App.js 파일에 component route 설정 (landing, login, register page)
 
 # 3. Axios
- 
+
 - axios 설치 {`npm install axios --save`}
+
+# 4. cors, proxy
+
+> proxy를 설정해서 cors 이슈 해결
+
+- http proxy middleware 설치 {`npm install http-proxy-middleware --save`}
+- src>setupProxy.js 파일 생성 (target: server port)
