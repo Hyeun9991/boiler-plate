@@ -44,3 +44,7 @@
 - concurrently 설치 {`npm install concurrently --save`}
 - package.json scripts에 dev 명령어 생성
   - `"dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""`
+
+# 6. antd css framework
+
+- 설치 {`npm install antd --save `}
