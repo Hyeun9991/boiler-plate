@@ -1,36 +1,31 @@
-// backend server
 const express = require('express');
 const app = express();
-const config = require('./config/key');
 const cookieParser = require('cookie-parser');
 
-// mongoose 연결
+require('dotenv').config();
+const config = require('./config/key');
 const mongoose = require('mongoose');
+
+const mongoURL = config.mongoURI;
 mongoose
-  .connect(config.mongoURI)
-  .then(() => {
-    console.log('MongoDB Connected...');
+  .connect(mongoURL, {
+    useNewUrlParser: true,
   })
-  .catch((err) => console.log(err));
+  .then(() => {
+    console.log('MongoDB connected...');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // JSON 데이터를 파싱하기 위한 미들웨어
+app.use(express.urlencoded({ extended: true })); // URL 인코딩된 데이터를 파싱하기 위한 미들웨어
 app.use(cookieParser());
-// app.use('/uploads', express.static('uploads'));
 
+// route 처리
 app.use('/api/users', require('./routes/users'));
 
-// 프로덕션 중인 경우 정적 애셋 제공
-if (process.env.NODE_ENV === 'production') {
-  // 정적 폴더 설정
-  app.use(express.static('/client/build'));
-
-  // 모든 페이지 경로에 대한 index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
-
-// port 연결 확인
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`Server Running at ${port}`));
+app.listen(port, () => {
+  console.log(`Server Running at ${port}`);
+});

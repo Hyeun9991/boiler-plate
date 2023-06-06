@@ -1,23 +1,22 @@
-import Navbar from './Navbar/Navbar';
+import React from 'react';
+import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import styled from 'styled-components';
+import ThemeToggle from './../ThemeToggle';
+import { useTheme } from '../../context/themeProvider';
 
-function Layout(props) {
+const Layout = ({ children }) => {
+  const [ThemeMode, toggleTheme] = useTheme();
+
   return (
     <div>
-      <Navbar />
-
-      <ContentContainer>{props.children}</ContentContainer>
-
+      <Header />
+      <ThemeToggle toggle={toggleTheme} mode={ThemeMode}>
+        DarkMode
+      </ThemeToggle>
+      <main>{children}</main>
       <Footer />
     </div>
   );
-}
-
-const ContentContainer = styled.main`
-  width: 97%;
-  height: auto;
-  margin: 75px auto;
-`;
+};
 
 export default Layout;

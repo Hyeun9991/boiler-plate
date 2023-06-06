@@ -1,73 +1,76 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { fontSizes } from '../../../theme/theme';
 
-function Footer() {
+const Footer = () => {
   return (
-    <FooterWrapper>
-      <Container>
-        <Logo>
-          <Link to="/">eunhye</Link>
-        </Logo>
-        <Menu>
-          <li>
-            <Link to="mailto:hyeun9991@gmail.com" target="_blank">
-              hyeun9991@gmail.com
-            </Link>
-          </li>
-          <li>
-            <Link to="https://github.com/Hyeun9991" target="_blank">
-              Github
-            </Link>
-          </li>
-        </Menu>
-      </Container>
-    </FooterWrapper>
-  );
-}
+    <FooterContainer>
+      <Menu>
+        <LogoWrap>
+          <Link to={'/'}>boiler plate</Link>
+        </LogoWrap>
 
-const FooterWrapper = styled.div`
-  background-color: #f2f2f2;
+        <MenuContainer>
+          <MenuItem>
+            <a>github</a>
+          </MenuItem>
+          <MenuItem>
+            <a>email</a>
+          </MenuItem>
+        </MenuContainer>
+      </Menu>
+    </FooterContainer>
+  );
+};
+
+const FooterContainer = styled.header`
+  background-color: ${({ theme }) => theme.bg_main1};
+  color: ${({ theme }) => theme.text1};
   width: 100%;
   height: 120px;
 `;
-const Container = styled.div`
+
+const Menu = styled.nav`
+  /* background-color: skyblue; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 90%;
   height: 100%;
   margin: 0 auto;
   padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
-const Logo = styled.h1`
+
+const LogoWrap = styled.h1`
+  text-transform: uppercase;
+  font-size: ${fontSizes.lg};
+  font-weight: 600;
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.text1};
+  }
+`;
+
+const MenuContainer = styled.ul`
   display: flex;
-  align-items: center;
+  gap: 2.5rem;
+`;
+
+const MenuItem = styled.li`
+  list-style: none;
 
   a {
-    color: #000;
     text-decoration: none;
+    color: ${({ theme }) => theme.text3};
+    font-size: ${fontSizes.small};
     text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 700;
-  }
-`;
-const Menu = styled.ul`
-  display: flex;
-  gap: 2rem;
-
-  li {
-    list-style: none;
-  }
-
-  a {
-    color: #000;
-    text-decoration: none;
-    font-size: 14px;
-    opacity: 0.7;
+    transition-duration: 0.2s;
+    transition: 0.22s ease-in-out;
+    cursor: pointer;
 
     &:hover {
-      opacity: 1;
+      color: ${({ theme }) => theme.text1};
       text-decoration: underline;
     }
   }

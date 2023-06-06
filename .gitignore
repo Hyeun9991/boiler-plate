@@ -1,7 +1,13 @@
-node_modules
+/node_modules
+/build
 
+.env
 dev.js
 
-memo.md
+.DS_Store
 
-uploads
+npm-debug.log*
+
+.vscode
+
+memo.md

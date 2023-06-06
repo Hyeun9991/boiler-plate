@@ -1,12 +1,12 @@
-const { User } = require("../models/User");
+const { User } = require('../models/user');
 
 // 인증 처리 미들웨어
 let auth = async (req, res, next) => {
   try {
-    // client cookie에서 token을 가져옴
-    const token = req.cookies.x_auth;
+    // cookie에서 token 가져옴
+    let token = req.cookies.x_auth;
 
-    // token을 복호화한 후 유저를 찾음
+    // token을 복호화한뒤 유저를 찾음
     const user = await User.findByToken(token);
 
     if (!user) {
@@ -17,7 +17,7 @@ let auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    next(err);
+    throw err;
   }
 };
 
