@@ -29,6 +29,11 @@ const FooterContainer = styled.header`
   color: ${({ theme }) => theme.text1};
   width: 100%;
   height: 120px;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    height: 70px;
+  }
 `;
 
 const Menu = styled.nav`
@@ -50,11 +55,21 @@ const LogoWrap = styled.h1`
     text-decoration: none;
     color: ${({ theme }) => theme.text1};
   }
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    font-size: ${fontSizes.base};
+  }
 `;
 
 const MenuContainer = styled.ul`
   display: flex;
   gap: 2.5rem;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    gap: 1.5rem;
+  }
 `;
 
 const MenuItem = styled.li`

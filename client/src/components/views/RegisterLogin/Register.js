@@ -53,7 +53,7 @@ const Register = () => {
       <ThemeToggle toggle={toggleTheme} mode={ThemeMode} />
       <HeaderContainer>
         <LogoWrap>
-          <Link to="/">eunhye</Link>
+          <Link to="/">boiler plate</Link>
         </LogoWrap>
       </HeaderContainer>
       <RegisterFormContainer>
@@ -148,7 +148,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   background: radial-gradient(
     circle at right bottom,
     #6606ad60,
@@ -164,6 +163,11 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 5%;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    height: 70px;
+  }
 `;
 const LogoWrap = styled.h1`
   text-transform: uppercase;
@@ -173,9 +177,14 @@ const LogoWrap = styled.h1`
     text-decoration: none;
     color: ${({ theme }) => theme.text1};
   }
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    font-size: ${fontSizes.base};
+  }
 `;
 const RegisterFormContainer = styled.div`
-  background: ${({ theme }) => theme.bg_element2};
+  background: ${({ theme }) => theme.bg_element1};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,7 +193,6 @@ const RegisterFormContainer = styled.div`
   padding: 32px;
   border-radius: 0.75rem;
   margin: 1rem;
-  border: 0.05rem solid ${({ theme }) => theme.border4};
 `;
 const Title = styled.h1`
   font-size: ${fontSizes.xxl};
@@ -209,7 +217,7 @@ const InputWrap = styled.div`
   }
 
   input {
-    background: ${({ theme }) => theme.bg_element1};
+    background: ${({ theme }) => theme.bg_element2};
     outline: none;
     border: none;
     transition: 0.3s all ease-in-out;

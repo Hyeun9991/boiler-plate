@@ -37,7 +37,9 @@ const RightMenu = () => {
     return (
       <RightMenuContainer>
         <MenuItem>
-          {user.userData && <UserName>{user.userData.name}</UserName>}
+          {user.userData && (
+            <UserName className="user-name">{user.userData.name}</UserName>
+          )}
         </MenuItem>
         <MenuItem>
           <NavLink to="#" onClick={logoutHandler} className="logout-btn">
@@ -53,6 +55,15 @@ const RightMenuContainer = styled.ul`
   display: flex;
   align-items: center;
   gap: 2.5rem;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    gap: 0;
+
+    .user-name {
+      margin-right: 1.5rem;
+    }
+  }
 `;
 
 const MenuItem = styled.li`
@@ -133,6 +144,13 @@ const MenuItem = styled.li`
   }
   .logout-btn {
     color: ${({ theme }) => theme.text4};
+  }
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    .signup-btn {
+      display: none;
+    }
   }
 `;
 

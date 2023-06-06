@@ -14,7 +14,7 @@ export default function Auth(SpecificComponent, option, adminRoute = null) {
    * adminRoute = true: 관리자만 진입 가능한 페이지 / Ex) Admin Page
    */
 
-  function AuthenticationCheck(props) {
+  function AuthenticationCheck() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
